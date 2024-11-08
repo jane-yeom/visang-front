@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.visang.front.b2b.user.mapper.UserMapper">
+
+    <select id="findAll" resultType="User">
+        SELECT *
+        FROM users
+        WHERE use_yn = 'Y'
+        ORDER BY id DESC
+    </select>
+
+    <select id="findById" parameterType="Long" resultType="User">
+        SELECT *
+        FROM users
+        WHERE id = #{id}
+        AND use_yn = 'Y'
+    </select>
+
+    <insert id="save" parameterType="User">
+        INSERT INTO users (
+            name,
+            email,
+            phone,
+            created_at,
+            use_yn
+        ) VALUES (
+            #{name},
+            #{email},
+            #{phone},
+            NOW(),
+            'Y'
+        )
+    </insert>
+
+    <update id="update" parameterType="User">
+        UPDATE users
+        SET
+            name = #{name},
+            email = #{email},
+            phone = #{phone},
+            updated_at = NOW()
+        WHERE id = #{id}
+        AND use_yn = 'Y'
+    </update>
+
+    <update id="delete" parameterType="Long">
+        UPDATE users
+        SET
+            use_yn = 'N',
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+</mapper>
